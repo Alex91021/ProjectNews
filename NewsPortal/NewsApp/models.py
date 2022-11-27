@@ -42,6 +42,9 @@ class Post(models.Model):
     text = models.TextField()
     rating = models.SmallIntegerField(default=0)
 
+    def __str__(self):
+        return self.author.name
+
     def like(self):
         self.rating += 1
         self.save()
@@ -57,6 +60,8 @@ class Post(models.Model):
 class PostCategory(models.Model):
     postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
     categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+
 
 
 class Comment(models.Model):
