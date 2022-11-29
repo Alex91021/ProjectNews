@@ -18,8 +18,8 @@ class CategoriesList(ListView):
 
 class PostsList(ListView):
     model = Post
-    ordering = 'name'
-    template_name = 'flatpages/posts.html'
+    ordering = 'postCategory'
+    template_name = 'posts.html'
     context_object_name = 'posts'
 
 

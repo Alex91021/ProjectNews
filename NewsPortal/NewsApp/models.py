@@ -43,7 +43,7 @@ class Post(models.Model):
     rating = models.SmallIntegerField(default=0)
 
     def __str__(self):
-        return self.author.name
+        return self.text
 
     def like(self):
         self.rating += 1
