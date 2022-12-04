@@ -1,4 +1,7 @@
 {% extends 'default.html' %}
+
+{% load custom_filters %}
+
 {% block title %}
 {{post.pk}}
 {% endblock title %}
@@ -11,6 +14,6 @@
 <h4>Автор: {{ post.author }}</h4>
 <h5>Дата публикации: {{ post.dateCreation|date:'d M Y l (H:i)' }}</h5>
 <br>
-<h4>{{ post.text }}</h4>
+<h4>{{ post.text|censor }}</h4>
 <br>
 {% endblock content %}
