@@ -9,7 +9,7 @@ class PostsList(ListView):
     ordering = '-dateCreation'
     template_name = 'posts.html'
     context_object_name = 'posts'
-    paginate_by = 2
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -20,6 +20,7 @@ class PostsList(ListView):
         context = super().get_context_data(**kwargs)
         context['time_now'] = datetime.utcnow()
         context['next_sale'] = None
+        context['filterset'] = self.filterset
         return context
 
 

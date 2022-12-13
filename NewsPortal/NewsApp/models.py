@@ -10,6 +10,10 @@ class Author(models.Model):
     def __str__(self):
         return self.authorUser.username
 
+    class Meta:
+        verbose_name = 'Авторы'
+        verbose_name_plural = 'Авторы'
+
     def update_rating(self):
         post_rat = self.post_set.aggregate(postRating=Sum('rating'))
         p_rate = 0
@@ -24,29 +28,37 @@ class Author(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64, unique=True,)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Категории'
+        verbose_name_plural = 'Категории'
+
 
 class Post(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Имя автора')
     NEWS = 'NW'
     ARTICLE = 'AR'
     CATEGORY_CHOICES = [
         (NEWS, 'Новость'),
         (ARTICLE, 'Статья')
     ]
-    categoryType = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=ARTICLE)
+    categoryType = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=ARTICLE, verbose_name='Категория')
     dateCreation = models.DateTimeField(auto_now_add=True)
     postCategory = models.ManyToManyField(Category, through='PostCategory')
-    title = models.CharField(max_length=128)
-    text = models.TextField()
-    rating = models.SmallIntegerField(default=0)
+    title = models.CharField(max_length=128, verbose_name='Заголовок')
+    text = models.TextField(verbose_name='Текст')
+    rating = models.SmallIntegerField(default=0, verbose_name='Рейтинг автора')
 
-    # def __str__(self):
-    #     return self.text
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Посты'
+        verbose_name_plural = 'Посты'
 
     def like(self):
         self.rating += 1
@@ -64,6 +76,13 @@ class PostCategory(models.Model):
     postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
     categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.categoryThrough.name
+
+    class Meta:
+        verbose_name = 'Категория поста'
+        verbose_name_plural = 'Категории постов'
+
 
 class Comment(models.Model):
     commentPost = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -71,6 +90,13 @@ class Comment(models.Model):
     text = models.TextField()
     dateCreation = models.DateTimeField(auto_now_add=True)
     rating = models.SmallIntegerField(default=0)
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
 
     def like(self):
         self.rating += 1

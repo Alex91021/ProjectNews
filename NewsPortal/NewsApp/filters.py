@@ -1,12 +1,17 @@
-from django_filters import FilterSet
-from .models import Post, Author
+from django_filters import FilterSet, ModelChoiceFilter
+from .models import Post, PostCategory
 
 
 class PostFilter(FilterSet):
+    # Category = ModelChoiceFilter(
+    #
+    # )
+
     class Meta:
         model = Post
         fields = {
-            # 'author': ['icontains'],
+            'postCategory': ['exact'],
             'title': ['icontains'],
             'rating': ['gte'],
+            'categoryType': ['icontains'],
         }
