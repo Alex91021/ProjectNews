@@ -14,4 +14,5 @@ class PostFilter(FilterSet):
             'title': ['icontains'],
             'rating': ['gte'],
             'categoryType': ['icontains'],
+            'dateCreation': ['gt'],
         }
