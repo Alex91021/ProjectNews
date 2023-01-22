@@ -48,7 +48,7 @@ class Post(models.Model):
     ]
     categoryType = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=ARTICLE, verbose_name='Категория')
     dateCreation = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
-    postCategory = models.ManyToManyField(Category, through='PostCategory')
+    postCategory = models.ManyToManyField(Category, through='PostCategory', verbose_name='Категория поста')
     title = models.CharField(max_length=128, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     rating = models.SmallIntegerField(default=0, verbose_name='Рейтинг автора')
